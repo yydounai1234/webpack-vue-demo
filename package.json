@@ -1,0 +1,31 @@
+{
+  "name": "webpack-koko",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack --config build/webpack.pro.config.js",
+    "static": "cross-env DEBUG=koko node express/index"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "vue": "^2.6.10",
+    "webpack": "^4.35.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "cross-env": "^5.2.0",
+    "css-loader": "^3.0.0",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "html-webpack-plugin": "^3.2.0",
+    "vue-loader": "^15.7.0",
+    "vue-template-compiler": "^2.6.10",
+    "webpack-bundle-analyzer": "^3.3.2",
+    "webpack-cli": "^3.3.5",
+    "webpack-merge": "^4.2.1"
+  }
+}
