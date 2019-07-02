@@ -5,6 +5,7 @@ const {
 const baseWebpackConfig = require('./webpack.config')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const CONFIG = require('../config')
 module.exports = merge(baseWebpackConfig, {
   output: {
@@ -20,7 +21,8 @@ module.exports = merge(baseWebpackConfig, {
     // 提取css样式
     new MiniCssExtractPlugin({
       chunkFilename: "css/[name].[contenthash].css"
-    })
+    }),
+    new OptimizeCSSAssetsPlugin()
   ],
   optimization: {
     // 单独提取webpack runtime-长效缓存
@@ -35,6 +37,6 @@ module.exports = merge(baseWebpackConfig, {
           chunks: 'all'
         }
       }
-    }
+    },
   }
 })

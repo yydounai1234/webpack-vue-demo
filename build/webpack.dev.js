@@ -1,7 +1,5 @@
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.config')
-const webpack = require('webpack')
-const CONFIG = require('../config')
 module.exports = merge(baseWebpackConfig, {
   // 行数能够正确映射-最佳品质的 source map
   devtool: 'eval-source-map',

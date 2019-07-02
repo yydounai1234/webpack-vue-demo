@@ -11,11 +11,15 @@ export default {
     },
     created() {
         console.log('HELLO WORLD')
+        console.log('超越')
     }
 }
 </script>
 <style module scoped>
     .app{
         color:blue
+    }
+    .name{
+        font-size:12px
     }
 </style>
