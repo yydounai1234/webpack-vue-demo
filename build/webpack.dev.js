@@ -6,7 +6,7 @@ module.exports = merge(baseWebpackConfig, {
   // dev服务器
   devServer: {
     host: '0.0.0.0',
-    port: 80,
+    port: 8000,
     hot: true,
     historyApiFallback: true,
     disableHostCheck: true,

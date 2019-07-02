@@ -1,9 +1,10 @@
-var express = require('express')
-var app = express()
-var debug = require('debug')('koko')
+const express = require('express')
+const app = express()
+const debug = require('debug')('koko')
+const history = require('connect-history-api-fallback')
 
+app.use(history())
 app.use(express.static("./dist"))
-
 app.get('/',function(req, res) {
     res.sendfile("./dist/index.html")
 })
@@ -11,8 +12,8 @@ app.get('/',function(req, res) {
 const server = app.listen(3000,onListening)
 
 function onListening() {
-    var addr = server.address();
-    var bind = typeof addr === 'string'
+  const addr = server.address();
+  const bind = typeof addr === 'string'
       ? 'pipe ' + addr
       : 'port ' + addr.port
     debug('Listening on ' + bind)
