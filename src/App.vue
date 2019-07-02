@@ -1,21 +1,21 @@
 <template>
-    <div id="app">{{value}}</div>
+    <div :class="$style.app">{{value}}</div>
 </template>
 <script>
 export default {
     name:'App',
     data() {
         return {
-            value:'我是神我是一个小天才'
+            value:'webpack-vue-template'
         }
     },
     created() {
-        console.log(1111111111111111111111111111)
+        console.log('HELLO WORLD')
     }
 }
 </script>
-<style scoped>
-    #app{
-        color:red
+<style module scoped>
+    .app{
+        color:blue
     }
 </style>

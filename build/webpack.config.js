@@ -1,8 +1,11 @@
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
 const CONFIG = require('../config')
 const { NODE_ENV } = process.env
 module.exports = {
+  // development 启用 NamedChunksPlugin 和 NamedModulesPlugin
+  // production 启用 FlagDependencyUsagePlugin FlagIncludedChunksPlugin ModuleConcatenationPlugin NoEmitOnErrorsPlugin OccurrenceOrderPlugin SideEffectsFlagPlugin  UglifyJsPlugin
   mode:NODE_ENV,
   entry: './src/main.js',
   module: {
@@ -23,8 +26,32 @@ module.exports = {
         test: /\.css$/,
         use: [
           'vue-style-loader',
-          'css-loader'
+          {
+            loader: 'css-loader',
+            options: {
+              // 开启 CSS Modules
+              modules: true
+            }
+          }
         ]
+      },
+      // 小于1000kb则内联
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 1000,
+          name: 'fonts/[name].[hash].[ext]'
+        }
+      },
+      // 小于1000kb则内联
+      {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 1000,
+          name: 'img/[name].[hash].[ext]'
+        }
       }
     ]
   },
@@ -35,6 +62,10 @@ module.exports = {
       filename: 'index.html',
       template: `${CONFIG.HTML_TEMPLATE_PATH}/index.html`
     }),
+    // 定义全局变量
+		new webpack.DefinePlugin({
+			'process.env.NODE_ENV': `'${process.env.NODE_ENV}'`
+		})
   ],
   resolve: {
     // 省略后缀
