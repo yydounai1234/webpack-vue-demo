@@ -1,16 +1,19 @@
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const webpack = require('webpack')
 const CONFIG = require('../config')
-const { NODE_ENV } = process.env
+const devMode = require('./utils').devMode()
+const {
+  NODE_ENV
+} = process.env
 module.exports = {
   // development 启用 NamedChunksPlugin 和 NamedModulesPlugin
   // production 启用 FlagDependencyUsagePlugin FlagIncludedChunksPlugin ModuleConcatenationPlugin NoEmitOnErrorsPlugin OccurrenceOrderPlugin SideEffectsFlagPlugin  UglifyJsPlugin
-  mode:NODE_ENV,
+  mode: NODE_ENV,
   entry: './src/main.js',
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.vue$/,
         loader: 'vue-loader'
       },
@@ -25,12 +28,13 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          'vue-style-loader',
+          // 生产环境采用MiniCssExtractPlugin外联样式
+          devMode ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
               // 开启 CSS Modules
-              modules: true
+              modules: true,
             }
           }
         ]
@@ -63,18 +67,18 @@ module.exports = {
       template: `${CONFIG.HTML_TEMPLATE_PATH}/index.html`
     }),
     // 定义全局变量
-		new webpack.DefinePlugin({
-			'process.env.NODE_ENV': `'${process.env.NODE_ENV}'`
-		})
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': `'${process.env.NODE_ENV}'`
+    })
   ],
   resolve: {
     // 省略后缀
     extensions: [
-        '.js', '.vue', '.json'
+      '.js', '.vue', '.json'
     ],
     // 需要在客户端编译模板，运行时 + 编译器
     alias: {
-        'vue$': 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue.esm.js'
     }
   }
 };
